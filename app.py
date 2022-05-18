@@ -1,8 +1,8 @@
 import streamlit as st
 from install import install
 
-install("logzero")
-from logzero import logzero
+# install("logzero")
+from logzero import logger
 
 logger.info("streamlit version: %s", st.__version__)
 
