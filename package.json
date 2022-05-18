@@ -1,0 +1,21 @@
+{
+    "dependencies": {
+        "npm-run-all": "^4.1.5"
+    },
+    "scripts": {
+        "start": "pyright && pytest && yarn style",
+        "test": "nodemon -w tests -w litbee -x pytest tests",
+        "pyright": "nodemon -w litbee -w .venv -e .py -x pyright litbee tests",
+        "pytest": "nodemon -w tests -w litbee -e .py -x pytest tests litbee",
+        "style": "nodemon -w litbee -w tests -x \"black tests litbee && python -m flake8\"",
+        "docstyle": "nodemon -w litbee -w tests -x pydocstyle --convention=google tests litbee",
+        "pylint": "nodemon -w litbee -e .py -x pylint litbee",
+        "test:litbee": "nodemon -w tests -e .py -x pytest -k litbee tests",
+        "publish": "poetry build && poetry publish",
+        "black": "black tests litbee",
+        "flake8": "flake8 tests litbee",
+        "pflake8": "pflake8 tests litbee",
+        "pep257": "pep257 tests litbee",
+        "final": "run-s docstyle black flake8 pytest"
+    }
+}
