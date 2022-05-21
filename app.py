@@ -33,7 +33,8 @@ st.set_page_config(
     menu_items=menu_items,
 )
 
-pd.set_option("precision", 2)
+# pd.set_option("precision", 2)
+pd.set_option("display.precision", 2)
 pd.options.display.float_format = "{:,.2f}".format
 
 
