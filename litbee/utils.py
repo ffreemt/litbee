@@ -73,8 +73,9 @@ about = dedent(f"""
     https://bumblebee.freeforums.net/thread/5/litbee or head to 桃花元 （qq group 316287378）
     """
 ).strip()
+
 menu_items = {
     'Get Help': 'https://bumblebee.freeforums.net/thread/5/litbee',
-    'Report a bug': "https://bumblebee.freeforums.net/thread/5/litbee",
+    'Report a bug': "https://github.com/ffreemt/litbee/issues",
     'About': about,
 }
