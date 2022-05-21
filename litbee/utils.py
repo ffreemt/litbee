@@ -27,7 +27,7 @@ msg = dedent("""
 
     * dzbee: german-chinese, fast para-align
 
-    * bumblebee: other language pairs, normal para-align
+    * xbee/bumblebee: other language pairs, normal para-align
 
     The algorithm for fast para-align is home-brewn. Two sent-align algorithms are used: one based on Gale-Church, the other machine learning.
     """
