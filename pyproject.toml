@@ -17,6 +17,7 @@ streamlit-multipage = "^0.0.18"
 cchardet = "^2.1.7"
 streamlit-aggrid = "^0.2.3"
 ezbee = "0.1.0a3"
+dzbee = "^0.1.1-alpha.2"
 
 [tool.poe.executor]
 type = "poetry"

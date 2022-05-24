@@ -1,4 +1,24 @@
 [[package]]
+name = "about-time"
+version = "3.1.1"
+description = "Easily measure timing and throughput of code blocks, with beautiful human friendly representations."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "alive-progress"
+version = "2.4.1"
+description = "A new kind of Progress Bar, with real-time throughput, ETA, and very cool animations!"
+category = "main"
+optional = false
+python-versions = ">=3.7, <4"
+
+[package.dependencies]
+about-time = "3.1.1"
+grapheme = "0.6.0"
+
+[[package]]
 name = "altair"
 version = "4.2.0"
 description = "Altair: A declarative statistical visualization library for Python."
@@ -55,6 +75,17 @@ cffi = ">=1.0.1"
 [package.extras]
 dev = ["pytest", "cogapp", "pre-commit", "wheel"]
 tests = ["pytest"]
+
+[[package]]
+name = "aset2pairs"
+version = "0.1.0"
+description = "Convert aset to block pairs"
+category = "main"
+optional = false
+python-versions = ">=3.8.3,<4.0.0"
+
+[package.dependencies]
+logzero = ">=1.7.0,<2.0.0"
 
 [[package]]
 name = "asttokens"
@@ -232,6 +263,17 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "commonmark"
+version = "0.9.1"
+description = "Python parser for the CommonMark Markdown spec"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
+
+[[package]]
 name = "debugpy"
 version = "1.6.0"
 description = "An implementation of the Debug Adapter Protocol for Python"
@@ -254,6 +296,27 @@ description = "XML bomb protection for Python stdlib modules"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[[package]]
+name = "dzbee"
+version = "0.1.1a2"
+description = "pack_name descr"
+category = "main"
+optional = false
+python-versions = ">=3.8.3,<4.0.0"
+
+[package.dependencies]
+aset2pairs = ">=0.1.0,<0.2.0"
+cchardet = ">=2.1.7,<3.0.0"
+icecream = ">=2.1.1,<3.0.0"
+install = ">=1.3.5,<2.0.0"
+Jinja2 = ">=3.1.2,<4.0.0"
+json-de2zh = "0.1.1-alpha.0"
+logzero = ">=1.7.0,<2.0.0"
+Morfessor = ">=2.0.6,<3.0.0"
+polyglot = ">=16.7.4,<17.0.0"
+typer = ">=0.4.1,<0.5.0"
+XlsxWriter = ">=3.0.3,<4.0.0"
 
 [[package]]
 name = "entrypoints"
@@ -403,6 +466,17 @@ python-versions = ">=3.7"
 
 [package.dependencies]
 gitdb = ">=4.0.1,<5"
+
+[[package]]
+name = "grapheme"
+version = "0.6.0"
+description = "Unicode grapheme helpers"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+test = ["pytest", "sphinx", "sphinx-autobuild", "wheel", "twine"]
 
 [[package]]
 name = "icecream"
@@ -595,6 +669,31 @@ description = "Lightweight pipelining with Python functions"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[[package]]
+name = "json-de2zh"
+version = "0.1.1a0"
+description = "pack_name descr"
+category = "main"
+optional = false
+python-versions = ">=3.8.3,<4.0.0"
+
+[package.dependencies]
+alive-progress = ">=2.4.1,<3.0.0"
+cmat2aset = ">=0.1.0-alpha.7,<0.2.0"
+fast-scores = ">=0.1.2,<0.2.0"
+fastlid = ">=0.1.7,<0.2.0"
+icecream = ">=2.1.1,<3.0.0"
+install = ">=1.3.5,<2.0.0"
+joblib = ">=1.1.0,<2.0.0"
+nltk = ">=3.7,<4.0"
+numpy = ">=1.22.3,<2.0.0"
+rich = ">=12.4.1,<13.0.0"
+set-loglevel = ">=0.1.2,<0.2.0"
+simplemma = "0.3.0"
+sklearn = ">=0.0,<0.1"
+split-words = ">=0.1.2,<0.2.0"
+typer = ">=0.4.1,<0.5.0"
 
 [[package]]
 name = "jsonschema"
@@ -1305,6 +1404,22 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)", "win-inet-pton"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<5)"]
 
 [[package]]
+name = "rich"
+version = "12.4.3"
+description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
+category = "main"
+optional = false
+python-versions = ">=3.6.3,<4.0.0"
+
+[package.dependencies]
+commonmark = ">=0.9.0,<0.10.0"
+pygments = ">=2.6.0,<3.0.0"
+typing-extensions = {version = ">=4.0.0,<5.0", markers = "python_version < \"3.9\""}
+
+[package.extras]
+jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
+
+[[package]]
 name = "scikit-learn"
 version = "1.1.1"
 description = "A set of python modules for machine learning and data mining"
@@ -1426,6 +1541,14 @@ description = "A modern CSS selector implementation for Beautiful Soup."
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[[package]]
+name = "split-words"
+version = "0.1.2"
+description = "Split German words"
+category = "main"
+optional = false
+python-versions = ">=3.8.3,<4.0.0"
 
 [[package]]
 name = "stack-data"
@@ -1623,6 +1746,14 @@ doc = ["mkdocs (>=1.1.2,<2.0.0)", "mkdocs-material (>=8.1.4,<9.0.0)", "mdx-inclu
 test = ["shellingham (>=1.3.0,<2.0.0)", "pytest (>=4.4.0,<5.4.0)", "pytest-cov (>=2.10.0,<3.0.0)", "coverage (>=5.2,<6.0)", "pytest-xdist (>=1.32.0,<2.0.0)", "pytest-sugar (>=0.9.4,<0.10.0)", "mypy (==0.910)", "black (>=22.3.0,<23.0.0)", "isort (>=5.0.6,<6.0.0)"]
 
 [[package]]
+name = "typing-extensions"
+version = "4.2.0"
+description = "Backported and Experimental Type Hints for Python 3.7+"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "tzdata"
 version = "2022.1"
 description = "Provider of IANA time zone data"
@@ -1735,9 +1866,17 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8.3"
-content-hash = "6b30c86d829dc4b133c6fa3cc20ec4d76b702b8a1a0b44172b28e8aaa0851641"
+content-hash = "7fbe1cd54bf6ad1eb68f992dac0b0cd5a9095bfece8c31edb11e224e4e41d4f3"
 
 [metadata.files]
+about-time = [
+    {file = "about-time-3.1.1.tar.gz", hash = "sha256:586b329450c9387d1ae8c42d2db4f5b4c57a54508d0f1b7bb00322ffd5ce9f9b"},
+    {file = "about_time-3.1.1-py3-none-any.whl", hash = "sha256:96841beb3f9b5de1cbb323d2bdb0fa9abdecbc46f2d546b9b3c2483d23daa17a"},
+]
+alive-progress = [
+    {file = "alive-progress-2.4.1.tar.gz", hash = "sha256:089757c8197f27ad972ba27e1060f6db92368d83c736884e159034fd74865323"},
+    {file = "alive_progress-2.4.1-py3-none-any.whl", hash = "sha256:5503ffca0a0607d5f0d24d3b10a718fe50e375470fa07602b246333eb7ec88ee"},
+]
 altair = [
     {file = "altair-4.2.0-py3-none-any.whl", hash = "sha256:0c724848ae53410c13fa28be2b3b9a9dcb7b5caa1a70f7f217bd663bb419935a"},
     {file = "altair-4.2.0.tar.gz", hash = "sha256:d87d9372e63b48cd96b2a6415f0cf9457f50162ab79dc7a31cd7e024dd840026"},
@@ -1772,6 +1911,10 @@ argon2-cffi-bindings = [
     {file = "argon2_cffi_bindings-21.2.0-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:20ef543a89dee4db46a1a6e206cd015360e5a75822f76df533845c3cbaf72670"},
     {file = "argon2_cffi_bindings-21.2.0-pp38-pypy38_pp73-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:ed2937d286e2ad0cc79a7087d3c272832865f779430e0cc2b4f3718d3159b0cb"},
     {file = "argon2_cffi_bindings-21.2.0-pp38-pypy38_pp73-win_amd64.whl", hash = "sha256:5e00316dabdaea0b2dd82d141cc66889ced0cdcbfa599e8b471cf22c620c329a"},
+]
+aset2pairs = [
+    {file = "aset2pairs-0.1.0-py3-none-any.whl", hash = "sha256:a7137c7492566933198eebcef8df8c77ffda2f239f0865ae28c2afaf2a252550"},
+    {file = "aset2pairs-0.1.0.tar.gz", hash = "sha256:ee8d69f5ddce401f4999182678b108d9580edcc19374e44ed698c2171a17b483"},
 ]
 asttokens = [
     {file = "asttokens-2.0.5-py2.py3-none-any.whl", hash = "sha256:0844691e88552595a6f4a4281a9f7f79b8dd45ca4ccea82e5e05b4bbdb76705c"},
@@ -1925,6 +2068,10 @@ colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
+commonmark = [
+    {file = "commonmark-0.9.1-py2.py3-none-any.whl", hash = "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"},
+    {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
+]
 debugpy = [
     {file = "debugpy-1.6.0-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:eb1946efac0c0c3d411cea0b5ac772fbde744109fd9520fb0c5a51979faf05ad"},
     {file = "debugpy-1.6.0-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:e3513399177dd37af4c1332df52da5da1d0c387e5927dc4c0709e26ee7302e8f"},
@@ -1952,6 +2099,10 @@ decorator = [
 defusedxml = [
     {file = "defusedxml-0.7.1-py2.py3-none-any.whl", hash = "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"},
     {file = "defusedxml-0.7.1.tar.gz", hash = "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"},
+]
+dzbee = [
+    {file = "dzbee-0.1.1a2-py3-none-any.whl", hash = "sha256:fe1c4e80be236a66639dba2ed7f1c71497def05e9a6eea838264ea9d92543426"},
+    {file = "dzbee-0.1.1a2.tar.gz", hash = "sha256:24dadb5fa6606d4fd54d28eb34db2126ce078a4a8b5032090dba2856ed906091"},
 ]
 entrypoints = [
     {file = "entrypoints-0.4-py3-none-any.whl", hash = "sha256:f174b5ff827504fd3cd97cc3f8649f3693f51538c7e4bdf3ef002c8429d42f9f"},
@@ -1995,6 +2146,9 @@ gitdb = [
 gitpython = [
     {file = "GitPython-3.1.27-py3-none-any.whl", hash = "sha256:5b68b000463593e05ff2b261acff0ff0972df8ab1b70d3cdbd41b546c8b8fc3d"},
     {file = "GitPython-3.1.27.tar.gz", hash = "sha256:1c885ce809e8ba2d88a29befeb385fcea06338d3640712b59ca623c220bb5704"},
+]
+grapheme = [
+    {file = "grapheme-0.6.0.tar.gz", hash = "sha256:44c2b9f21bbe77cfb05835fec230bd435954275267fea1858013b102f8603cca"},
 ]
 icecream = [
     {file = "icecream-2.1.2-py2.py3-none-any.whl", hash = "sha256:04b9cea4d9931cf6960db0430ebf11fa34464ce7152e384ddf50f96d25b201b4"},
@@ -2047,6 +2201,10 @@ jinja2 = [
 joblib = [
     {file = "joblib-1.1.0-py2.py3-none-any.whl", hash = "sha256:f21f109b3c7ff9d95f8387f752d0d9c34a02aa2f7060c2135f465da0e5160ff6"},
     {file = "joblib-1.1.0.tar.gz", hash = "sha256:4158fcecd13733f8be669be0683b96ebdbbd38d23559f54dca7205aea1bf1e35"},
+]
+json-de2zh = [
+    {file = "json_de2zh-0.1.1a0-py3-none-any.whl", hash = "sha256:ae20c3296912e8c9a013ed53ff361cc18e0f1524f2641fb86e2c4e65994dc199"},
+    {file = "json_de2zh-0.1.1a0.tar.gz", hash = "sha256:ff15c6418d52340d401dc69854c6d90b088aa5d535930c4d73ea4d0aca8161ca"},
 ]
 jsonschema = [
     {file = "jsonschema-4.5.1-py3-none-any.whl", hash = "sha256:71b5e39324422543546572954ce71c67728922c104902cb7ce252e522235b33f"},
@@ -2657,6 +2815,10 @@ requests = [
     {file = "requests-2.27.1-py2.py3-none-any.whl", hash = "sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d"},
     {file = "requests-2.27.1.tar.gz", hash = "sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61"},
 ]
+rich = [
+    {file = "rich-12.4.3-py3-none-any.whl", hash = "sha256:26ef784599a9ab905ade34ff28904e4fbe9bce16e02c33c78b0229551104c146"},
+    {file = "rich-12.4.3.tar.gz", hash = "sha256:e7550ca19aec51b216ae4c34bfce82e94a0c79bdbf95cafbf42f343d0fb3f45a"},
+]
 scikit-learn = [
     {file = "scikit-learn-1.1.1.tar.gz", hash = "sha256:3e77b71e8e644f86c8b5be7f1c285ef597de4c384961389ee3e9ca36c445b256"},
     {file = "scikit_learn-1.1.1-cp310-cp310-macosx_10_13_x86_64.whl", hash = "sha256:102f51797cd8944bf44a038d106848ddf2804f2c1edf7aea45fba81a4fdc4d80"},
@@ -2796,6 +2958,10 @@ soupsieve = [
     {file = "soupsieve-2.3.2.post1-py3-none-any.whl", hash = "sha256:3b2503d3c7084a42b1ebd08116e5f81aadfaea95863628c80a3b774a11b7c759"},
     {file = "soupsieve-2.3.2.post1.tar.gz", hash = "sha256:fc53893b3da2c33de295667a0e19f078c14bf86544af307354de5fcf12a3f30d"},
 ]
+split-words = [
+    {file = "split-words-0.1.2.tar.gz", hash = "sha256:4b8ed2bd86e266570e61c5e9ae210e7cf5e01b530e7dace2a047cd86af5276c9"},
+    {file = "split_words-0.1.2-py3-none-any.whl", hash = "sha256:5c7657f03fbdbe8ec731afff715e0779f754a01dbeac8ddc762ee2f2af6d4eb8"},
+]
 stack-data = [
     {file = "stack_data-0.2.0-py3-none-any.whl", hash = "sha256:999762f9c3132308789affa03e9271bbbe947bf78311851f4d485d8402ed858e"},
     {file = "stack_data-0.2.0.tar.gz", hash = "sha256:45692d41bd633a9503a5195552df22b583caf16f0b27c4e58c98d88c8b648e12"},
@@ -2894,6 +3060,10 @@ traitlets = [
 typer = [
     {file = "typer-0.4.1-py3-none-any.whl", hash = "sha256:e8467f0ebac0c81366c2168d6ad9f888efdfb6d4e1d3d5b4a004f46fa444b5c3"},
     {file = "typer-0.4.1.tar.gz", hash = "sha256:5646aef0d936b2c761a10393f0384ee6b5c7fe0bb3e5cd710b17134ca1d99cff"},
+]
+typing-extensions = [
+    {file = "typing_extensions-4.2.0-py3-none-any.whl", hash = "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708"},
+    {file = "typing_extensions-4.2.0.tar.gz", hash = "sha256:f1c24655a0da0d1b67f07e17a5e6b2a105894e6824b92096378bb3668ef02376"},
 ]
 tzdata = [
     {file = "tzdata-2022.1-py2.py3-none-any.whl", hash = "sha256:238e70234214138ed7b4e8a0fab0e5e13872edab3be586ab8198c407620e2ab9"},

@@ -1,7 +1,8 @@
 """Prep front cover for sidebar (based on st-bumblebee-st_app.py)."""
-import streamlit as st
 from textwrap import dedent
+
 import logzero
+import streamlit as st
 from logzero import logger
 from set_loglevel import set_loglevel
 
@@ -9,7 +10,8 @@ from litbee import __version__
 
 logzero.loglevel(set_loglevel())
 
-msg = dedent("""
+msg = dedent(
+    """
     What would you like to do?
     The following alignment engines are available.
 
@@ -22,7 +24,8 @@ msg = dedent("""
     **DL-Engin**: based on machine learning, multilingual, one para/sent takes about 1s.
     """
 ).strip()
-msg = dedent("""
+msg = dedent(
+    """
     * ezbee: english-chinese, fast para-align
 
     * dzbee: german-chinese, fast para-align
@@ -46,7 +49,8 @@ def sb_front_cover():
         st.markdown(msg)
 
 
-intructins = dedent(f"""
+intructins = dedent(
+    f"""
     *   Set up options in the left sidebar
 
     *   Click expanders / +: to reveal more details; -: to hide them
@@ -67,7 +71,8 @@ def instructions():
     logger.debug("instructions exit")
 
 
-about = dedent(f"""
+about = dedent(
+    f"""
     # litbee {__version__}
 
     https://bumblebee.freeforums.net/thread/5/litbee or head to 桃花元 （qq group 316287378）
@@ -75,7 +80,7 @@ about = dedent(f"""
 ).strip()
 
 menu_items = {
-    'Get Help': 'https://bumblebee.freeforums.net/thread/5/litbee',
-    'Report a bug': "https://github.com/ffreemt/litbee/issues",
-    'About': about,
+    "Get Help": "https://bumblebee.freeforums.net/thread/5/litbee",
+    "Report a bug": "https://github.com/ffreemt/litbee/issues",
+    "About": about,
 }

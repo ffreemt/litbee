@@ -1,7 +1,6 @@
 """Test litbee."""
 # pylint: disable=broad-except
-from litbee import __version__
-from litbee import litbee
+from litbee import __version__, litbee
 
 
 def test_version():

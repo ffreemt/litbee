@@ -1,6 +1,8 @@
 """Display dzbee page."""
-import streamlit as st
 import pandas as pd
+import streamlit as st
+from loguru import logger as loggu
+from logzero import logger
 
 
 def dzbee_page():
@@ -14,4 +16,5 @@ def dzbee_page():
         logger.error(exc)
         df = pd.DataFrame([[""]])
 
+    loggu.debug(" df ")
     st.table(df)

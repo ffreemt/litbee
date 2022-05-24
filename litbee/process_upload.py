@@ -1,9 +1,9 @@
 """Process uploads."""
 # pylint: disable=invalid-name, unused-import
+import tempfile
+from pathlib import Path
 from typing import Union
 
-from pathlib import Path
-import tempfile
 import cchardet
 from logzero import logger
 
@@ -37,7 +37,7 @@ def process_upload(upload: Union[str, tempfile._TemporaryFileWrapper, bytes]) ->
     ]
     # check .txt .md ''(no suffix)
     if fpath.suffix.lower() not in suffixes:
-        logger.warning('suffix: [%s] not in %s', fpath.suffix, suffixes)
+        logger.warning("suffix: [%s] not in %s", fpath.suffix, suffixes)
         # return "File type not supported, yet."
 
     try:
@@ -76,29 +76,3 @@ def process_upload(upload: Union[str, tempfile._TemporaryFileWrapper, bytes]) ->
     logger.warning("%s", msg)
 
     return msg
-
-
-_ = '''  # colab gradio-file-inputs-upload.ipynb
-# file_to_text/process_file
-def zip_to_text(file_obj):
-  """
-  # zf = zipfile.ZipFile('german-recipes-dataset.zip')
-  zf = file_obj
-  namelist = zipfile.ZipFile.namelist(zf);
-  # filename = zf.open(namelist[0]);
-  file_contents = []
-  for filename in namelist:
-    with zf.open(filename) as fhandle:
-      file_contents.append(fhandle.read().decode())
-  """
-  # fileobj is <class 'tempfile._TemporaryFileWrapper'>
-
-  # gr.inputs.File("bytes")
-  if isinstance(file_obj, bytes):
-    data = file_obj.decode()
-    return f"{type(file_obj)}\n{dir(file_obj)}\n{data}"
-
-  # "file"/gr.inputs.File("file")  file_obj.name: /tmp/READMEzm8hc5ze.md
-  data = Path(file_obj.name).read_bytes()
-  return f"{file_obj.name} {type(file_obj)}\n{dir(file_obj)} \n{data}"
-# '''

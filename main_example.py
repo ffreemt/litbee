@@ -50,7 +50,6 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 # pylint: disable=invalid-name
 import os
 import sys
-import time
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Optional
@@ -76,8 +75,9 @@ from litbee.utils import menu_items
 
 # from ezbee import ezbee
 
+
+
 os.environ["TZ"] = "Asia/Shanghai"
-time.tzset()
 os.environ["LOGLEVEL"] = "10"  # uncomment this in dev
 logzero.loglevel(set_loglevel())
 
@@ -109,20 +109,8 @@ st.set_page_config(
 pd.set_option("display.precision", 2)
 pd.options.display.float_format = "{:,.2f}".format
 
-_ = dict(
-    beetype="ezbee",
-    src_filename="",
-    tgt_filename="",
-    src_fileio=b"",
-    tgt_fileio=b"",
-    src_file="",
-    tgt_file="",
-    list1=[""],
-    list2=[""],
-    df=None,
-    df_a=None,
-    df_s_a=None,
-)
+
+_ = dict(beetype="ezbee", src_filename="", tgt_filename="", src_fileio=b"", tgt_fileio=b"", src_file="", tgt_file="", list1=[], list2=[], df=None, df_a=None, df_s_a=None,)
 if "ns" not in state:
     state.ns = SimpleNamespace(**_)
 state.ns.list = [*_]

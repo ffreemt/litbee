@@ -1,12 +1,13 @@
 """Display xbee page."""
-import streamlit as st
 import pandas as pd
+import streamlit as st
+from logzero import logger
 
 
 def xbee_page():
     """Display xbee page."""
     # st.title('dzbee')
-    st.write('Coming soon')
+    st.write("Coming soon")
 
     try:
         df = st.session_state.ns.df
