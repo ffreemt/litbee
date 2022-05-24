@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "align texts via streamlit "
 authors = ["ffreemt"]
 license = "MIT"
-readme = "README.md"
+readme = "README1.md"
 repository = "https://github.com/ffreemt/litbee"
 
 [tool.poetry.dependencies]
