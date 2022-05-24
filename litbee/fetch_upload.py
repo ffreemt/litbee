@@ -188,7 +188,8 @@ def fetch_upload():
     logger.debug(" df_a.to_numpy(): %s", df_a_np)
     ic(df_a_np)
 
-    st.table(df_a.replace("", np.nan))  # st.table(df_a) "Could not convert '' with type str
+    # st.table(df_a.replace("", np.nan))  # st.table(df_a) "Could not convert '' with type str
+    st.table(df_a.astype(str))
 
     gb = GridOptionsBuilder.from_dataframe(df_a)
     gb.configure_pagination(paginationAutoPageSize=True)
