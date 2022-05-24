@@ -6,16 +6,18 @@ from functools import partial
 from itertools import zip_longest
 
 import logzero
+import numpy as np
 import pandas as pd
 import streamlit as st
-from ezbee import ezbee
 from dzbee import dzbee
+from ezbee import ezbee
 from ezbee.gen_pairs import gen_pairs  # aset2pairs?
+from icecream import ic
 from loguru import logger as loggu
 from logzero import logger
 from set_loglevel import set_loglevel
-from st_aggrid import AgGrid
-from st_aggrid.grid_options_builder import GridOptionsBuilder
+from st_aggrid import AgGrid, GridUpdateMode, GridOptionsBuilder
+# from st_aggrid.grid_options_builder import GridOptionsBuilder
 from streamlit import session_state as state
 
 logzero.loglevel(set_loglevel())
@@ -150,7 +152,7 @@ def fetch_upload():
             )
         except Exception as e:
             # logger.error("aset = ezbee(...) exc: %s", e)
-            logger.error("aset = globals()[state.ns.beetype](...) exc: %s", e)
+            logger.exception("aset = globals()[state.ns.beetype](...) exc: %s", e)
             aset = ""
             # st.write(e)
             st.write("Collecting inputs...")
@@ -173,10 +175,20 @@ def fetch_upload():
         logger.debug("%s...%s", aligned_pairs[:3], aligned_pairs[-3:])
         # logger.debug("aligned_pairs[:20]: \n%s", aligned_pairs[:20])
 
-    df_a = pd.DataFrame(aligned_pairs, columns=["text1", "text2", "llh"])
+    df_a = pd.DataFrame(aligned_pairs, columns=["text1", "text2", "llh"], dtype="object")
 
     # insert seq no
     df_a.insert(0, "sn", range(len(df_a)))
+
+    logger.debug("df_a: \n%s", df_a)
+    logger.debug(" gb not updated, why?")
+
+    logger.debug(" df_a.info(): %s", df_a.info())
+    df_a_np = df_a.to_numpy()
+    logger.debug(" df_a.to_numpy(): %s", df_a_np)
+    ic(df_a_np)
+
+    st.table(df_a.replace("", np.nan))  # st.table(df_a) "Could not convert '' with type str
 
     gb = GridOptionsBuilder.from_dataframe(df_a)
     gb.configure_pagination(paginationAutoPageSize=True)
@@ -190,13 +202,14 @@ def fetch_upload():
     gridOptions = gb.build()
 
     st.write("aligned (double-click a cell to edit, drag column header to adjust widths)")
-    agdf = AgGrid(
+    ag_df = AgGrid(
         # df,
         df_a,
         gridOptions=gridOptions,
         key="outside",
         editable=True,
         # width="100%",  # width parameter is deprecated
-        height=500,
+        height=750,
         # fit_columns_on_grid_load=True,
+        update_mode=GridUpdateMode.MODEL_CHANGED
     )

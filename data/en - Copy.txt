@@ -1,8 +1,0 @@
-[Young Warrior] Kingold(...) 2021-12-30 22:27:37
-It seems that the standalone version can
-omit the GUI and specify the two files to be aligned directly on the command line.
-
-
-But if it's not the GUI module that's taking up space, then
- removing it won't help compress the size of the whole package.
-
