@@ -135,7 +135,10 @@ def fetch_upload():
 
     list1 = [elm.strip() for elm in df.text1 if elm.strip()]
     list2 = [elm.strip() for elm in df.text2 if elm.strip()]
-    logger.info("Processing data...")
+    logger.debug("list1[:3]: %s", list1[:3])
+    logger.debug("list2[:3]: %s", list2[:3])
+
+    logger.info("Processing data... %s", state.ns.beetype)
     if state.ns.beetype in ["ezbee", "dzbee"]:
         try:
             # aset = ezbee(
@@ -146,7 +149,8 @@ def fetch_upload():
                 # min_samples=min_samples,
             )
         except Exception as e:
-            logger.error("aset = ezbee(...) exc: %s", e)
+            # logger.error("aset = ezbee(...) exc: %s", e)
+            logger.error("aset = globals()[state.ns.beetype](...) exc: %s", e)
             aset = ""
             # st.write(e)
             st.write("Collecting inputs...")
