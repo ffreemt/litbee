@@ -207,6 +207,7 @@ def fetch_upload():
         df_a,
         gridOptions=gridOptions,
         key="outside",
+        reload_data=True,
         editable=True,
         # width="100%",  # width parameter is deprecated
         height=750,
