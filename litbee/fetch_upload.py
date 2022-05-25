@@ -28,26 +28,34 @@ def fetch_upload():
     """Fetch content from upload."""
 
     # src_fileio tgt_fileio
-    sb_pick_files = st.sidebar.expander("Pick two files", expanded=True)
-    with sb_pick_files:
-        src_fileio = st.file_uploader(
-            "Choose source file (utf8 txt)",
-            type=[
-                "txt",
-            ],
-            key="src_text",
-            # accept_multiple_files=True,
-            # accept_multiple_files=False,
-        )
+    with st.form(key='upload_in_form'):
+        sb_pick_files = st.expander("Pick two files", expanded=True)
+        with sb_pick_files:
+            col1, col2 = st.columns(2)
+            with col1:
+                src_fileio = st.file_uploader(
+                    "Choose source file (utf8 txt)",
+                    type=[
+                        "txt",
+                    ],
+                    key="src_text",
+                    # accept_multiple_files=True,
+                    # accept_multiple_files=False,
+                )
 
-        tgt_fileio = st.file_uploader(
-            "Choose target file (utf8 txt)",
-            type=[
-                "txt",
-            ],
-            key="tgt_text",
-            # accept_multiple_files=True,
-        )
+            with col2:
+                tgt_fileio = st.file_uploader(
+                    "Choose target file (utf8 txt)",
+                    type=[
+                        "txt",
+                    ],
+                    key="tgt_text",
+                    # accept_multiple_files=True,
+                )
+        submitted = st.form_submit_button('Submit')
+
+    if not submitted:
+        return None
 
     # logger.debug(" len(src_fileio): %s", len(src_fileio))
     # logger.debug(" len(tgt_fileio): %s", len(tgt_fileio))
@@ -58,13 +66,12 @@ def fetch_upload():
         # for st.file_uploade accept_multiple_files=True
         if isinstance(src_fileio, list):
             logger.debug(" len(src_fileio): %s", len(src_fileio))
-            # logger.debug("src_fileio[-1].name: [%s]", src_fileio[-1].name)
             filenames = []
             try:
-                filenames = [elm.name for elm in src_fileio]
+                filenames = [elm.name for elm in src_fileio]  # type: ignore
             except Exception as exc:
                 logger.error(exc)
-            logger.debug("src_fileio  names: *%s*", filenames)  # type: ignore
+            logger.debug("src_fileio  names: *%s*", filenames)
 
             # state.ns.src_fileio = src_fileio
             state.ns.src_file = src_fileio[-1].getvalue().decode()
@@ -178,7 +185,7 @@ def fetch_upload():
         st.write(f"{state.ns.beetype} coming soon...")
         return None
 
-    # fastlid changed logger.level is changed to 20
+    # fastlid changed logger.level to 20
     # turn back to loglevel
     logzero.loglevel(set_loglevel())
     if aset:
@@ -194,19 +201,10 @@ def fetch_upload():
 
     df_a = pd.DataFrame(aligned_pairs, columns=["text1", "text2", "llh"], dtype="object")
 
+    st.table(df_a.astype(str))
+
     # insert seq no
     df_a.insert(0, "sn", range(len(df_a)))
-
-    logger.debug("df_a: \n%s", df_a)
-    logger.debug(" gb not updated, why?")
-
-    logger.debug(" df_a.info(): %s", df_a.info())
-    df_a_np = df_a.to_numpy()
-    logger.debug(" df_a.to_numpy(): %s", df_a_np)
-    ic(df_a_np)
-
-    # st.table(df_a.replace("", np.nan))  # st.table(df_a) "Could not convert '' with type str
-    st.table(df_a.astype(str))
 
     gb = GridOptionsBuilder.from_dataframe(df_a)
     gb.configure_pagination(paginationAutoPageSize=True)
