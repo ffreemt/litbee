@@ -12,6 +12,7 @@ import streamlit as st
 from dzbee import dzbee
 from ezbee import ezbee
 from ezbee.gen_pairs import gen_pairs  # aset2pairs?
+from fastlid import fastlid
 from icecream import ic
 from loguru import logger as loggu
 from logzero import logger
@@ -53,11 +54,17 @@ def fetch_upload():
 
     if src_fileio:
         logger.debug(" type(src_fileio): %s", type(src_fileio))
+
+        # for st.file_uploade accept_multiple_files=True
         if isinstance(src_fileio, list):
             logger.debug(" len(src_fileio): %s", len(src_fileio))
-            logger.debug("src_fileio[-1].name: [%s]", src_fileio[-1].name)
-            filenames = [elm.name for elm in src_fileio]
-            logger.debug("src_fileio  names: %s", filenames)
+            # logger.debug("src_fileio[-1].name: [%s]", src_fileio[-1].name)
+            filenames = []
+            try:
+                filenames = [elm.name for elm in src_fileio]
+            except Exception as exc:
+                logger.error(exc)
+            logger.debug("src_fileio  names: *%s*", filenames)  # type: ignore
 
             # state.ns.src_fileio = src_fileio
             state.ns.src_file = src_fileio[-1].getvalue().decode()
@@ -142,6 +149,16 @@ def fetch_upload():
 
     logger.info("Processing data... %s", state.ns.beetype)
     if state.ns.beetype in ["ezbee", "dzbee"]:
+        # bug in json_de2zh.gen_cmat for dzbee and
+        # fast_scores.gen_cmat  for ezbee
+        # temp fix:
+        if state.ns.beetype in ["dzbee"]:
+            fastlid.set_languages = ["de", "zh"]
+        elif state.ns.beetype in ["ezbee"]:
+            fastlid.set_languages = ["en", "zh"]
+        else:
+            fastlid.set_languages = None
+
         try:
             # aset = ezbee(
             aset = globals()[state.ns.beetype](
