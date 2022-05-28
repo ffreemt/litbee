@@ -1,0 +1,1 @@
+python -c "from pathlib import Path; import debee; print(Path(debee.__name__).absolute())"

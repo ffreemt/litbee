@@ -3,16 +3,22 @@
 
 litbee (currently with ezbee, dzbee and debee), made with streamlit
 
-## clone repo
-```
-git clone https://github.com/ffreemt/litbee
-cd litbee
-```
-
 ## Pre-install
 Python 3.8 only
 
 `pyicu`, `pycld2` and `fasttext`: refer to `debee`'s pre-install [https://github.com/ffreemt/debee/blob/main/README.md](https://github.com/ffreemt/debee/blob/main/README.md)
+
+## via pip
+```bash
+pip install litbee
+python -m litbee
+```
+
+## Or via git clone
+```
+git clone https://github.com/ffreemt/litbee
+cd litbee
+```
 
 ## Install it
 ```shell
@@ -25,5 +31,6 @@ poetry install
 ```bash
 python -m streamlit run app.py
 
-# streamlit run app.py
+# or streamlit run app.py
+# or python -m litbee
 ```
