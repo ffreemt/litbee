@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "litbee"
-version = "0.1.0-alpha.2"
+version = "0.1.0"
 description = "align texts via streamlit "
 authors = ["ffreemt"]
 license = "MIT"

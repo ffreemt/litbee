@@ -11,7 +11,8 @@ jobs:
         python-version: [3.8]
         poetry-version: [1.1.2]
         # os: [ubuntu-18.04, macos-latest, windows-latest]
-        os: [ubuntu-18.04, macos-latest]
+        # os: [ubuntu-18.04, macos-latest]
+        os: [ubuntu-18.04]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -21,8 +22,11 @@ jobs:
       - uses: abatilo/actions-poetry@v2.0.0
         with:
           poetry-version: ${{ matrix.poetry-version }}
-      - name: Install packages
-        run: poetry install  # --no-dev
+      - name: Install libicu-dev, pypi pyicu pycld2 and packages
+        run: |
+          sudo apt-get install libicu-dev pkg-config
+          poetry add pyicu==2.8 pycld2
+          poetry install  # --no-dev
       - name: Run flake8
         run: |
           poetry run flake8 --exit-zero
