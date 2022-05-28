@@ -47,7 +47,8 @@ def options():
         beetype = st.sidebar.radio("Pick a bee", beetype_list)
         state.ns.beetype = beetype
 
-    if beetype not in ["ezbee", "dzbee", "debee"]:
+    # if beetype not in ["ezbee", "dzbee", "debee"]:
+    if beetype not in ["ezbee", "dzbee"]:
         st.write("Coming soon")
         return None
 
