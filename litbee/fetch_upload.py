@@ -158,7 +158,8 @@ def fetch_upload():
     logger.debug("list2[:3]: %s", list2[:3])
 
     logger.info("Processing data... %s", state.ns.beetype)
-    if state.ns.beetype in ["ezbee", "dzbee", "debee"]:
+    # if state.ns.beetype in ["ezbee", "dzbee", "debee"]:
+    if state.ns.beetype in ["ezbee", "dzbee"]:
         # bug in json_de2zh.gen_cmat for dzbee and
         # fast_scores.gen_cmat  for ezbee
         # temp fix:
