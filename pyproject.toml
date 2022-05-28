@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "litbee"
-version = "0.1.0"
+version = "0.1.0-alpha.2"
 description = "align texts via streamlit "
 authors = ["ffreemt"]
 license = "MIT"
@@ -16,9 +16,11 @@ set-loglevel = "^0.1.2"
 streamlit-multipage = "^0.0.18"
 cchardet = "^2.1.7"
 streamlit-aggrid = "^0.2.3"
-ezbee = "0.1.0a3"
 dzbee = "^0.1.1-alpha.2"
 loguru = "^0.6.0"
+streamlit = "^1.9.2"
+debee = "^0.1.0-alpha.2"
+ezbee = "^0.1.0"
 
 [tool.poe.executor]
 type = "poetry"

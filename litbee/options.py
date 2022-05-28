@@ -39,7 +39,7 @@ def options():
         unsafe_allow_html=True,
     )
 
-    beetype_list = ["ezbee", "dzbee", "xbee"]
+    beetype_list = ["ezbee", "dzbee", "debee", "xbee"]
 
     col1, col2 = st.columns(2)
 
@@ -47,7 +47,7 @@ def options():
         beetype = st.sidebar.radio("Pick a bee", beetype_list)
         state.ns.beetype = beetype
 
-    if beetype not in ["ezbee", "dzbee"]:
+    if beetype not in ["ezbee", "dzbee", "debee"]:
         st.write("Coming soon")
         return None
 

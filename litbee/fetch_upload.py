@@ -11,7 +11,10 @@ import pandas as pd
 import streamlit as st
 from dzbee import dzbee
 from ezbee import ezbee
-from ezbee.gen_pairs import gen_pairs  # aset2pairs?
+from debee import debee
+
+# from ezbee.gen_pairs import gen_pairs  # aset2pairs?
+from aset2pairs import aset2pairs
 from fastlid import fastlid
 from icecream import ic
 from loguru import logger as loggu
@@ -155,7 +158,7 @@ def fetch_upload():
     logger.debug("list2[:3]: %s", list2[:3])
 
     logger.info("Processing data... %s", state.ns.beetype)
-    if state.ns.beetype in ["ezbee", "dzbee"]:
+    if state.ns.beetype in ["ezbee", "dzbee", "debee"]:
         # bug in json_de2zh.gen_cmat for dzbee and
         # fast_scores.gen_cmat  for ezbee
         # temp fix:
@@ -163,11 +166,13 @@ def fetch_upload():
             fastlid.set_languages = ["de", "zh"]
         elif state.ns.beetype in ["ezbee"]:
             fastlid.set_languages = ["en", "zh"]
+        elif state.ns.beetype in ["debee"]:
+            fastlid.set_languages = ["de", "en"]
         else:
             fastlid.set_languages = None
 
         try:
-            # aset = ezbee(
+            # aset = ezbee/dzbee/debee
             aset = globals()[state.ns.beetype](
                 list1,
                 list2,
@@ -182,7 +187,9 @@ def fetch_upload():
             st.write("Collecting inputs...")
             return None
     else:
-        st.write(f"{state.ns.beetype} coming soon...")
+        filename = inspect.currentframe().f_code.co_filename
+        lineno = inspect.currentframe().f_lineno
+        st.write(f"{state.ns.beetype} coming soon...{filenmae}:{lineno}")
         return None
 
     # fastlid changed logger.level to 20
@@ -194,7 +201,8 @@ def fetch_upload():
 
     # st.write(aset)
 
-    aligned_pairs = gen_pairs(list1, list2, aset)
+    # aligned_pairs = gen_pairs(list1, list2, aset)
+    aligned_pairs = aset2pairs(list1, list2, aset)
     if aligned_pairs:
         logger.debug("%s...%s", aligned_pairs[:3], aligned_pairs[-3:])
         # logger.debug("aligned_pairs[:20]: \n%s", aligned_pairs[:20])

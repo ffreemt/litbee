@@ -30,6 +30,8 @@ msg = dedent(
 
     * dzbee: german-chinese, fast para-align
 
+    * debee: german-english, fast para-align
+
     * xbee/bumblebee: other language pairs, normal para-align
 
     The algorithm for fast para-align is home-brewn. Two sent-align algorithms are used: one based on Gale-Church, the other machine learning.
@@ -71,7 +73,7 @@ def instructions():
     logger.debug("instructions exit")
 
 
-about = dedent(
+about_msg = dedent(
     f"""
     # litbee {__version__}
 
@@ -82,5 +84,5 @@ about = dedent(
 menu_items = {
     "Get Help": "https://bumblebee.freeforums.net/thread/5/litbee",
     "Report a bug": "https://github.com/ffreemt/litbee/issues",
-    "About": about,
+    "About": about_msg,
 }
