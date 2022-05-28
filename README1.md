@@ -1,18 +1,29 @@
 # litbee
 [![pytest](https://github.com/ffreemt/litbee/actions/workflows/routine-tests.yml/badge.svg)](https://github.com/ffreemt/litbee/actions)[![python](https://img.shields.io/static/v1?label=python+&message=3.8&color=blue)](https://www.python.org/downloads/)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/litbee.svg)](https://badge.fury.io/py/litbee)
 
-litbee (python 3.8 only), made with streamlit
+litbee (currently with ezbee, dzbee and debee), made with streamlit
+
+## clone repo
+```
+git clone https://github.com/ffreemt/litbee
+cd litbee
+```
+
+## Pre-install
+Python 3.8 only
+
+`pyicu`, `pycld2` and `fasttext`: refer to `debee`'s pre-install [https://github.com/ffreemt/debee/blob/main/README.md](https://github.com/ffreemt/debee/blob/main/README.md)
 
 ## Install it
-
 ```shell
-pip install git+https://github.com/ffreemt/litbee
-# poetry add git+https://github.com/ffreemt/litbee
-# git clone https://github.com/ffreemt/litbee && cd litbee
+poetry install
+
+# or pip install -r requirements.txt
 ```
 
 ## Use it
-```python
-from litbee import litbee
+```bash
+python -m streamlit run app.py
 
+# streamlit run app.py
 ```
