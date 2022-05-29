@@ -76,6 +76,10 @@ from litbee.utils import menu_items
 
 # from ezbee import ezbee
 
+curr_py = sys.version[:3]
+msg = f"Some packages litbee depends on can only run with Python 3.8, current python is {curr_py}, sorry..."
+assert  == "3.8", msg
+
 os.environ["TZ"] = "Asia/Shanghai"
 time.tzset()
 os.environ["LOGLEVEL"] = "10"  # uncomment this in dev
