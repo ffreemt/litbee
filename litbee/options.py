@@ -47,8 +47,8 @@ def options():
         beetype = st.sidebar.radio("Pick a bee", beetype_list)
         state.ns.beetype = beetype
 
-    # if beetype not in ["ezbee", "dzbee", "debee"]:
-    if beetype not in ["ezbee", "dzbee"]:
+    # if beetype not in ["ezbee", "dzbee"]:
+    if beetype not in ["ezbee", "dzbee", "debee"]:
         st.write("Coming soon")
         return None
 
@@ -65,6 +65,7 @@ def options():
     # item = menu[source]
     # item()
 
+    # fetch_upload()/fetch_paste()/fetch_urls()
     menu[source]()
 
     # if hasattr(state.ns, "df"): delattr(state.ns, "df")

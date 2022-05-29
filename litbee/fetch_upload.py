@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from dzbee import dzbee
-from ezbee import ezbee
+from ezbee import ezbee, __version__
 from debee import debee
 
 # from ezbee.gen_pairs import gen_pairs  # aset2pairs?
@@ -158,8 +158,8 @@ def fetch_upload():
     logger.debug("list2[:3]: %s", list2[:3])
 
     logger.info("Processing data... %s", state.ns.beetype)
-    # if state.ns.beetype in ["ezbee", "dzbee", "debee"]:
-    if state.ns.beetype in ["ezbee", "dzbee"]:
+    # if state.ns.beetype in ["ezbee", "dzbee"]:
+    if state.ns.beetype in ["ezbee", "dzbee", "debee"]:
         # bug in json_de2zh.gen_cmat for dzbee and
         # fast_scores.gen_cmat  for ezbee
         # temp fix:
@@ -171,6 +171,15 @@ def fetch_upload():
             fastlid.set_languages = ["de", "en"]
         else:
             fastlid.set_languages = None
+
+        fn = globals()[state.ns.beetype]
+        logger.debug("type(fn): %s", fn)
+        logger.debug("dir(fn): %s", dir(fn))
+        logger.debug("fn.__doc__: %s", fn.__doc__)
+        logger.debug("fn.__name__: %s", fn.__name__)
+        logger.debug("ezbee __version__: %s", __version__)
+        from inspect import getabsfile
+        logger.debug("getabsfile(fn): %s", getabsfile(fn))
 
         try:
             # aset = ezbee/dzbee/debee
