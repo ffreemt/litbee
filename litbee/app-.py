@@ -58,18 +58,14 @@ from typing import Optional
 import loguru
 import logzero
 import pandas as pd
-import ezbee
-import dzbee
-import debee
-
 import streamlit as st
 from loguru import logger as loggu
 from logzero import logger
 from set_loglevel import set_loglevel
 from streamlit import session_state as state
 
-from litbee import __version__
-# from litbee.options import options
+from litbee import __version__, litbee
+from litbee.options import options
 
 # from litbee.files2df import files2df
 # from litbee.utils import sb_front_cover, instructions, menu_items
@@ -78,29 +74,15 @@ from litbee import __version__
 # from litbee.xbee_page import xbee_page
 from litbee.utils import menu_items
 
-from litbee.multipage import Multipage
-
-# from litbee.fetch_upload import fetch_upload
-# from litbee.fetch_paste import fetch_paste
-# from litbee.fetch_urls import fetch_urls
-
-from litbee.home import home
-from litbee.settings import settings
-from litbee.info import info
-from litbee.utils import style_css
-
 # from ezbee import ezbee
 
 curr_py = sys.version[:3]
-msg = f"Some packages litbee depends on can only run with Python 3.8, current python is **{curr_py}**, sorry..."
+msg = f"Some packages litbee depends on can only run with Python 3.8, current python is {curr_py}, sorry..."
 assert curr_py == "3.8", msg
 
 os.environ["TZ"] = "Asia/Shanghai"
 time.tzset()
-
-# uncomment this in dev oe set/export LOGLEVEL=10
-# os.environ["LOGLEVEL"] = "10"
-
+os.environ["LOGLEVEL"] = "10"  # uncomment this in dev
 logzero.loglevel(set_loglevel())
 
 loggu.remove()
@@ -122,7 +104,7 @@ st.set_page_config(
     page_title=f"litbee v{__version__}",
     # page_icon="🧊",
     page_icon="🐝",
-    layout="wide",
+    # layout="wide",
     initial_sidebar_state="auto",  # "auto" or "expanded" or "collapsed",
     menu_items=menu_items,
 )
@@ -133,7 +115,6 @@ pd.options.display.float_format = "{:,.2f}".format
 
 _ = dict(
     beetype="ezbee",
-    sourcetype="upload",
     src_filename="",
     tgt_filename="",
     src_fileio=b"",
@@ -145,43 +126,15 @@ _ = dict(
     df=None,
     df_a=None,
     df_s_a=None,
-    count=1,
 )
 if "ns" not in state:
     state.ns = SimpleNamespace(**_)
 state.ns.list = [*_]
 
-logger.info(
-    "versions ezbee dzbee debee: %s, %s, %s",
-    ezbee.__version__,
-    dzbee.__version__,
-    debee.__version__,
-)
-
 
 def main():
     """Bootstrap."""
-    # options()
-
-    st.markdown(f"<style>{style_css}</style>", unsafe_allow_html=True)
-
-    app = Multipage()
-
-    # app.add_page("Home", "house", ask.app)
-    # app.add_page("Settings", "gear", settings.app)
-    # app.add_page("Info", "info", info.app)
-
-    # app.add_page("Home", "house", fetch_upload)
-    app.add_page("Home", "house", home)
-    app.add_page("Settings", "gear", settings)
-    app.add_page("Info", "info", info)
-
-    # The main app
-    app.run()
-
-    st.markdown(f"""<div class="text"> run: {state.ns.count}</div>""", unsafe_allow_html=True)
-    loggu.debug(f" run: {state.ns.count}")
-    state.ns.count += 1
+    options()
 
 
 main()
