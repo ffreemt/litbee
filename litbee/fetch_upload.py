@@ -22,6 +22,7 @@ from fastlid import fastlid
 from icecream import ic
 from loguru import logger as loggu
 from logzero import logger
+from set_loglevel import set_loglevel
 from st_aggrid import AgGrid, GridUpdateMode, GridOptionsBuilder
 # from st_aggrid.grid_options_builder import GridOptionsBuilder
 from streamlit import session_state as state
