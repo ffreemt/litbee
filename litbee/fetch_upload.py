@@ -2,16 +2,19 @@
 
 org ezbee_page.py.
 """
+# pylint: disable=invalid-name
 from functools import partial
+import inspect
 from itertools import zip_longest
+from time import perf_counter
 
 import logzero
 import numpy as np
 import pandas as pd
 import streamlit as st
-from dzbee import dzbee
-from ezbee import ezbee, __version__
-from debee import debee
+from dzbee import dzbee  # noqa
+from ezbee import ezbee  # noqa
+from debee import debee  # noqa
 
 # from ezbee.gen_pairs import gen_pairs  # aset2pairs?
 from aset2pairs import aset2pairs
@@ -19,21 +22,29 @@ from fastlid import fastlid
 from icecream import ic
 from loguru import logger as loggu
 from logzero import logger
-from set_loglevel import set_loglevel
 from st_aggrid import AgGrid, GridUpdateMode, GridOptionsBuilder
 # from st_aggrid.grid_options_builder import GridOptionsBuilder
 from streamlit import session_state as state
 
-logzero.loglevel(set_loglevel())
+# logzero.loglevel(set_loglevel())
 
 
-def fetch_upload():
+def fetch_upload():  # noqa
     """Fetch content from upload."""
+    # st.write(state.ns.beetype)
+
+    if state.ns.sourcetype not in ["upload"]:
+        st.write("Coming soooooooon...")
+        return None
+
+    if state.ns.beetype not in ["ezbee", "dzbee", "debee"]:
+        st.write("Coming soon...")
+        return None
 
     # src_fileio tgt_fileio
     with st.form(key='upload_in_form'):
-        sb_pick_files = st.expander("Pick two files", expanded=True)
-        with sb_pick_files:
+        _ = st.expander(f"{state.ns.beetype}: Pick two files", expanded=True)
+        with _:
             col1, col2 = st.columns(2)
             with col1:
                 src_fileio = st.file_uploader(
@@ -57,12 +68,10 @@ def fetch_upload():
                 )
         submitted = st.form_submit_button('Submit')
 
-    if not submitted:
-        return None
-
     # logger.debug(" len(src_fileio): %s", len(src_fileio))
     # logger.debug(" len(tgt_fileio): %s", len(tgt_fileio))
 
+    filename1 = ""
     if src_fileio:
         logger.debug(" type(src_fileio): %s", type(src_fileio))
 
@@ -87,7 +96,9 @@ def fetch_upload():
             # state.ns.src_fileio = src_fileio
             state.ns.src_file = src_fileio.getvalue().decode()
             state.ns.src_filename = src_fileio.name
+        filename1 = state.ns.src_filename
 
+    filename2 = ""
     if tgt_fileio:
         if isinstance(tgt_fileio, list):
             logger.warning("not set to handle multiple files")
@@ -95,6 +106,32 @@ def fetch_upload():
         else:
             state.ns.tgt_file = tgt_fileio.getvalue().decode()
             state.ns.tgt_filename = tgt_fileio.name
+            filename2 = tgt_fileio.name
+
+    # proceed when Submit is clicked
+    msg1 = ""
+    if filename1:
+        msg1 += f" file1: {filename1}"
+    msg2 = ""
+    if filename2:
+        msg2 += f" file2: {filename2}"
+    glue = ""
+    if filename1 and filename2:
+        glue = ", "
+
+    st.write(f"  Submitted upload: {msg1}{glue}{msg2}")
+    if not submitted:
+        return None
+
+    if not (filename1 or filename2):
+        st.write("|  no file uploaded")
+        return None
+    elif not filename1:
+        st.write("|  file1 not ready")
+        return None
+    elif not filename2:
+        st.write("|  file2 not ready")
+        return None
 
     try:
         _ = state.ns.src_file.splitlines()
@@ -173,33 +210,45 @@ def fetch_upload():
             fastlid.set_languages = None
 
         fn = globals()[state.ns.beetype]
-        logger.debug("type(fn): %s", fn)
-        logger.debug("dir(fn): %s", dir(fn))
-        logger.debug("fn.__doc__: %s", fn.__doc__)
+        # logger.debug("type(fn): %s", fn)
+        # logger.debug("dir(fn): %s", dir(fn))
+        # logger.debug("fn.__doc__: %s", fn.__doc__)
         logger.debug("fn.__name__: %s", fn.__name__)
-        logger.debug("ezbee __version__: %s", __version__)
+
         from inspect import getabsfile
         logger.debug("getabsfile(fn): %s", getabsfile(fn))
 
-        try:
-            # aset = ezbee/dzbee/debee
-            aset = globals()[state.ns.beetype](
-                list1,
-                list2,
-                # eps=eps,
-                # min_samples=min_samples,
-            )
-        except Exception as e:
-            # logger.error("aset = ezbee(...) exc: %s", e)
-            logger.exception("aset = globals()[state.ns.beetype](...) exc: %s", e)
-            aset = ""
-            # st.write(e)
-            st.write("Collecting inputs...")
-            return None
+        with st.spinner(" diggin..."):
+            then = perf_counter()
+            try:
+                # aset = ezbee/dzbee/debee
+                aset = globals()[state.ns.beetype](
+                    list1,
+                    list2,
+                    # eps=eps,
+                    # min_samples=min_samples,
+                )
+            except Exception as e:
+                # logger.error("aset = ezbee(...) exc: %s", e)
+                logger.exception("aset = globals()[state.ns.beetype](...) exc: %s", e)
+                aset = ""
+                # st.write(e)
+                st.write("Collecting inputs...")
+                return None
+        st.success(f"Done, took {perf_counter() - then:.2f} s")
+
     else:
-        filename = inspect.currentframe().f_code.co_filename
-        lineno = inspect.currentframe().f_lineno
-        st.write(f"{state.ns.beetype} coming soon...{filenmae}:{lineno}")
+        try:
+            filename = inspect.currentframe().f_code.co_filename
+        except Exception as e:
+            logger.error(e)
+            filename = ""
+        try:
+            lineno = inspect.currentframe().f_lineno
+        except Exception as e:
+            logger.error(e)
+            lineno = ""
+        st.write(f"{state.ns.beetype} coming soon...{filename}:{lineno}")
         return None
 
     # fastlid changed logger.level to 20
@@ -214,12 +263,15 @@ def fetch_upload():
     # aligned_pairs = gen_pairs(list1, list2, aset)
     aligned_pairs = aset2pairs(list1, list2, aset)
     if aligned_pairs:
-        logger.debug("%s...%s", aligned_pairs[:3], aligned_pairs[-3:])
+        logger.debug("%s...%s", aligned_pairs[:1], aligned_pairs[-1:])
         # logger.debug("aligned_pairs[:20]: \n%s", aligned_pairs[:20])
 
     df_a = pd.DataFrame(aligned_pairs, columns=["text1", "text2", "llh"], dtype="object")
 
-    st.table(df_a.astype(str))
+    # if set_loglevel() <= 10:
+    _ = st.expander("done aligned")
+    with _:
+        st.table(df_a.astype(str))
 
     # insert seq no
     df_a.insert(0, "sn", range(len(df_a)))
@@ -235,16 +287,18 @@ def fetch_upload():
     gb.configure_default_column(**options)
     gridOptions = gb.build()
 
-    st.write("aligned (double-click a cell to edit, drag column header to adjust widths)")
-    ag_df = AgGrid(
-        # df,
-        df_a,
-        gridOptions=gridOptions,
-        key="outside",
-        reload_data=True,
-        editable=True,
-        # width="100%",  # width parameter is deprecated
-        height=750,
-        # fit_columns_on_grid_load=True,
-        update_mode=GridUpdateMode.MODEL_CHANGED
-    )
+    # st.write("editable aligned (double-click a cell to edit, drag column header to adjust widths)")
+    _ = "editable aligned (double-click a cell to edit, drag column header to adjust widths)"
+    with st.expander(_, expanded=False):
+        ag_df = AgGrid(
+            # df,
+            df_a,
+            gridOptions=gridOptions,
+            key="outside",
+            reload_data=True,
+            editable=True,
+            # width="100%",  # width parameter is deprecated
+            height=750,
+            # fit_columns_on_grid_load=True,
+            update_mode=GridUpdateMode.MODEL_CHANGED
+        )

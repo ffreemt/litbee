@@ -7,13 +7,12 @@ from loguru import logger as loggu
 from logzero import logger
 from streamlit import session_state as state
 
-from litbee.fetch_paste import fetch_paste
-
 # from litbee.ezbee_page import ezbee_page
 # from litbee.dzbee_page import dzbee_page
 # from litbee.xbee_page import xbee_page
 from litbee.fetch_upload import fetch_upload
 from litbee.fetch_urls import fetch_urls
+from litbee.fetch_paste import fetch_paste
 from litbee.files2df import files2df
 from litbee.utils import instructions, sb_front_cover
 
