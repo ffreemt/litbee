@@ -143,3 +143,4 @@ win32-setctime==1.1.0; sys_platform == "win32" and python_version >= "3.5"
 word2word==1.0.0; python_full_version >= "3.8.3" and python_full_version < "4.0.0" and python_version >= "3.6"
 xlsxwriter==3.0.3; python_full_version >= "3.8.3" and python_full_version < "4.0.0" and python_version >= "3.4"
 zipp==3.8.0; python_full_version >= "3.7.1" and python_version < "3.9" and python_version >= "3.7"
+streamlit_option_menu
