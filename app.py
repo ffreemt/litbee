@@ -122,7 +122,7 @@ st.set_page_config(
     page_title=f"litbee v{__version__}",
     # page_icon="🧊",
     page_icon="🐝",
-    layout="wide",
+    # layout="wide",
     initial_sidebar_state="auto",  # "auto" or "expanded" or "collapsed",
     menu_items=menu_items,
 )
