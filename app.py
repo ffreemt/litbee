@@ -118,7 +118,7 @@ loggu.add(
 
 # from PIL import Image
 # page_icon=Image.open("icon.ico"),
-st.set_page_config(
+st.set_page_config(  # type: ignore
     page_title=f"litbee v{__version__}",
     # page_icon="🧊",
     page_icon="🐝",
@@ -134,6 +134,7 @@ pd.options.display.float_format = "{:,.2f}".format
 _ = dict(
     beetype="ezbee",
     sourcetype="upload",
+    sourcecount=2,
     src_filename="",
     tgt_filename="",
     src_fileio=b"",
@@ -179,7 +180,10 @@ def main():
     # The main app
     app.run()
 
-    st.markdown(f"""<div class="text"> run: {state.ns.count}</div>""", unsafe_allow_html=True)
+    # st.markdown(f"""<div class="text"> run: {state.ns.count}</div>""", unsafe_allow_html=True)
+
+    if set_loglevel() <= 10:
+        st.markdown(state.ns.count)
     loggu.debug(f" run: {state.ns.count}")
     state.ns.count += 1
 

@@ -240,12 +240,12 @@ def fetch_upload():  # noqa
 
     else:
         try:
-            filename = inspect.currentframe().f_code.co_filename
+            filename = inspect.currentframe().f_code.co_filename  # type: ignore
         except Exception as e:
             logger.error(e)
             filename = ""
         try:
-            lineno = inspect.currentframe().f_lineno
+            lineno = inspect.currentframe().f_lineno  # type: ignore
         except Exception as e:
             logger.error(e)
             lineno = ""

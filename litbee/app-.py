@@ -100,7 +100,7 @@ loggu.add(
 
 # from PIL import Image
 # page_icon=Image.open("icon.ico"),
-st.set_page_config(
+st.set_page_config(  # type: ignore
     page_title=f"litbee v{__version__}",
     # page_icon="🧊",
     page_icon="🐝",
