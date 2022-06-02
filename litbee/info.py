@@ -1,10 +1,11 @@
 """Present info about litbee."""
-import ezbee
-import dzbee
-import debee
-
 from textwrap import dedent
+
+import debee
+import dzbee
+import ezbee
 import streamlit as st
+
 from litbee import __version__
 
 # from litbee.utils import style_css
@@ -23,7 +24,9 @@ msg = dedent(
     <li> xbee/bumblebee: other language pairs, normal para-align
     </ul>
 
-    The algorithm for fast para-align is home-brewn. Two sent-align algorithms are used: one based on Gale-Church, the other machine learning.
+    The algorithm for fast para-align is home-brewn. Two
+    sent-align algorithms are used: one based on Gale-Church,
+    the other machine learning.
     </div>
     """
 ).strip()

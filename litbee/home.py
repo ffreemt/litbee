@@ -2,9 +2,10 @@
 
 org ezbee_page.py.
 """
+import inspect
+
 # pylint: disable=invalid-name
 from functools import partial
-import inspect
 from itertools import zip_longest
 from time import perf_counter
 
@@ -12,18 +13,19 @@ import logzero
 import numpy as np
 import pandas as pd
 import streamlit as st
-from dzbee import dzbee  # noqa
-from ezbee import ezbee  # noqa
-from debee import debee  # noqa
 
 # from ezbee.gen_pairs import gen_pairs  # aset2pairs?
 from aset2pairs import aset2pairs
+from debee import debee  # noqa
+from dzbee import dzbee  # noqa
+from ezbee import ezbee  # noqa
 from fastlid import fastlid
 from icecream import ic
 from loguru import logger as loggu
 from logzero import logger
 from set_loglevel import set_loglevel
-from st_aggrid import AgGrid, GridUpdateMode, GridOptionsBuilder
+from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
+
 # from st_aggrid.grid_options_builder import GridOptionsBuilder
 from streamlit import session_state as state
 
@@ -43,7 +45,7 @@ def home():  # noqa
         return None
 
     # src_fileio tgt_fileio
-    with st.form(key='upload_in_form'):
+    with st.form(key="upload_in_form"):
         _ = st.expander(f"{state.ns.beetype}: Pick two files", expanded=True)
         with _:
             col1, col2 = st.columns(2)
@@ -67,7 +69,7 @@ def home():  # noqa
                     key="tgt_text",
                     # accept_multiple_files=True,
                 )
-        submitted = st.form_submit_button('Submit')
+        submitted = st.form_submit_button("Submit")
 
     # logger.debug(" len(src_fileio): %s", len(src_fileio))
     # logger.debug(" len(tgt_fileio): %s", len(tgt_fileio))
@@ -217,6 +219,7 @@ def home():  # noqa
         logger.debug("fn.__name__: %s", fn.__name__)
 
         from inspect import getabsfile
+
         logger.debug("getabsfile(fn): %s", getabsfile(fn))
 
         with st.spinner(" diggin..."):
@@ -267,7 +270,9 @@ def home():  # noqa
         logger.debug("%s...%s", aligned_pairs[:1], aligned_pairs[-1:])
         # logger.debug("aligned_pairs[:20]: \n%s", aligned_pairs[:20])
 
-    df_a = pd.DataFrame(aligned_pairs, columns=["text1", "text2", "llh"], dtype="object")
+    df_a = pd.DataFrame(
+        aligned_pairs, columns=["text1", "text2", "llh"], dtype="object"
+    )
 
     # if set_loglevel() <= 10:
     _ = st.expander("done aligned")
@@ -301,5 +306,5 @@ def home():  # noqa
             # width="100%",  # width parameter is deprecated
             height=750,
             # fit_columns_on_grid_load=True,
-            update_mode=GridUpdateMode.MODEL_CHANGED
+            update_mode=GridUpdateMode.MODEL_CHANGED,
         )

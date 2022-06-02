@@ -40,7 +40,7 @@ msg = dedent(
 
 
 def sb_front_cover():
-    """Prep front cover for sidebar"""
+    """Prep front cover for sidebar."""
     st.sidebar.markdown(f"### litbee {__version__} ")
 
     sb_tit_expander = st.sidebar.expander("More info (click to toggle)", expanded=False)
@@ -65,6 +65,7 @@ intructins = dedent(
 
 
 def instructions():
+    """Prep msg."""
     logger.debug("instructions entry")
     back_cover_expander = st.expander("Instructions")
     with back_cover_expander:

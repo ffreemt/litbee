@@ -1,6 +1,7 @@
 """Prep Settings/Options page."""
 # pylint: disable=invalid-name
 from functools import partial
+
 import streamlit as st
 from loguru import logger as loggu
 from logzero import logger
@@ -10,7 +11,8 @@ from streamlit import session_state as state
 def settings():
     """Prep  Settings/Options page.
 
-    Refer to options.py"""
+    Refer to options.py
+    """
     # horizotal radio
     st.write(
         "<style>div.row-widget.stRadio > div{flex-direction:row;}</style>",
@@ -24,6 +26,7 @@ def settings():
     # col1, col2 = st.columns(2)
 
     # with col1:
+    _ = "ezbee: english-chinese; dzbee: german-chinese, debee: german-english; xbee: other language pairs (slow, approx.1000 pairs/3 min) | ezbee: 英/中; dzbee: 德/中, debee: 德/英; xbee: 其他语言对（慢, 约1000对/3分钟）"
     try:
         index = beetype_list.index(state.ns.beetype)
     except Exception as e:
@@ -34,7 +37,7 @@ def settings():
         beetype_list,
         index=index,
         format_func=lambda x: f"{x:<7} |",
-        help="ezbee: english-chinese; dzbee: german-chinese, debee: german-english",
+        help=_,
     )
     state.ns.beetype = beetype
 
@@ -70,11 +73,27 @@ def settings():
     )
     state.ns.sourcecount = sourcecount
 
+    sentali_list = [None, "fast", "slow"]
+    try:
+        index = sentali_list.index(state.ns.sentali)
+    except Exception as e:
+        logger.error("sentali index error: %s, setting to 0", e)
+        index = 0
+    sentali = st.radio(
+        "Sent Align",
+        sentali_list,
+        index=index,
+        format_func=lambda x: f"{str(x):<4} |",
+        help="None: no sent align; fast: gale-church; slow: machine-learning",
+        disabled=True,
+    )
+    state.ns.sentali = sentali
+
     # show state.ns[:6]
     loggu.debug(f" state.ns.list: {state.ns.list}")
 
     # beetype, sourcetype, sourcecount, filename1, filename2
-    _ = map(partial(getattr, state.ns), state.ns.list[:5])
+    _ = map(partial(getattr, state.ns), state.ns.list[:6])
     logger.debug(" state.ns.list[:3]: %s", str([*_]))
 
     # st.write(f"run: {state.ns.count}")

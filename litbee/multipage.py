@@ -13,29 +13,24 @@ class Multipage:
     """Framework for combining multiple streamlit applications."""
 
     def __init__(self) -> None:
-        """Constructor class to generate a list which will store all our applications as an instance variable."""
+        """Construct class to generate a list which will store all our applications as an instance variable."""
         self.pages = []
 
     def add_page(self, title, icon, func) -> None:
-        """Class Method to Add pages to the project
+        """Class Method to Add pages to the project.
 
         Args:
             title ([str]): The title of page which we are adding to the list of apps
-
+            icon: icon from streamlit-menu-option
             func: Python function to render this page in Streamlit
         """
-
-        self.pages.append(
-            {
-                "title": title,
-                "icon": icon,
-                "function": func
-            }
-        )
+        self.pages.append({"title": title, "icon": icon, "function": func})
 
     def run(self):
-        # Drodown to select the page to run
-        st.markdown("""
+        """Dropdown to select the page to run."""
+        # Dropdown to select the page to run
+        st.markdown(
+            """
             <style>
                 section[data-testid="stSidebar"] > div:first-of-type {
                     background-color: var(--secondary-background-color);
@@ -51,12 +46,18 @@ class Multipage:
                     padding: 1rem 0;
                 }
             </style>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
         with st.sidebar:
-            selected = option_menu(None, [page["title"] for page in self.pages],
-                                   icons=[page["icon"] for page in self.pages],
-                                   menu_icon="cast", default_index=0)
+            selected = option_menu(
+                None,
+                [page["title"] for page in self.pages],
+                icons=[page["icon"] for page in self.pages],
+                menu_icon="cast",
+                default_index=0,
+            )
 
         # Run the selected page
         for index, item in enumerate(self.pages):

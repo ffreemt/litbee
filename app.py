@@ -135,6 +135,7 @@ _ = dict(
     beetype="ezbee",
     sourcetype="upload",
     sourcecount=2,
+    sent_ali=None,
     src_filename="",
     tgt_filename="",
     src_fileio=b"",
