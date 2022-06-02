@@ -25,6 +25,7 @@ streamlit-option-menu = "^0.3.2"
 plotly = "^5.8.0"
 hanzidentifier = "^1.0.2"
 opencc-python-reimplemented = "^0.1.6"
+tabulate = "^0.8.9"
 
 [tool.poe.executor]
 type = "poetry"
@@ -32,6 +33,10 @@ type = "poetry"
 [tool.poe.tasks]
 memo = "echo poe test or poetry run poe test"
 test = "pytest tests"
+pyright = "pyright litbee"
+flake8 = "flake8 litbee --ignore F401,E501,F841"
+check = ["pyright", "flake8"]
+export = "poetry export --without-hashes -f requirements.txt -o requirements.txt"
 build = "poetry build"
 _publish = "poetry publish"
 release = ["test", "build", "_publish"]

@@ -281,6 +281,9 @@ def fetch_upload():  # noqa
     _ = st.expander("done aligned")
     with _:
         st.table(df_a.astype(str))
+        # st.markdown(df_a.astype(str).to_markdown())
+        # st.write("to_numpy().tolist()")
+        # st.write(df_a.astype(str).to_numpy().tolist())
 
     # insert seq no
     df_a.insert(0, "sn", range(len(df_a)))

@@ -2,13 +2,16 @@
 
 org ezbee_page.py.
 """
+# pylint: disable=invalid-name
+# pylint: disable=too-many-locals, too-many-return-statements, too-many-branches, too-many-statements
 import inspect
 
 # pylint: disable=invalid-name
 from functools import partial
 from itertools import zip_longest
-from time import perf_counter
+from about_time import about_time
 
+import hanzidentifier
 import logzero
 import numpy as np
 import pandas as pd
@@ -29,7 +32,7 @@ from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 # from st_aggrid.grid_options_builder import GridOptionsBuilder
 from streamlit import session_state as state
 
-# logzero.loglevel(set_loglevel())
+from litbee.t2s import t2s
 
 
 def home():  # noqa
@@ -114,26 +117,35 @@ def home():  # noqa
     # proceed when Submit is clicked
     msg1 = ""
     if filename1:
-        msg1 += f" file1: {filename1}"
+        msg1 += f" file1 {filename1}"
     msg2 = ""
     if filename2:
-        msg2 += f" file2: {filename2}"
+        msg2 += f" file2 {filename2}"
     glue = ""
     if filename1 and filename2:
         glue = ", "
 
-    st.write(f"  Submitted upload: {msg1}{glue}{msg2}")
+    upload_placeholder = st.empty()
+    prefix = f"  Submitted upload: {msg1}{glue}{msg2}"
+    upload_placeholder.write(prefix)
+
+    # st.write(f"  Submitted upload: {msg1}{glue}{msg2}")
     if not submitted:
         return None
 
     if not (filename1 or filename2):
-        st.write("|  no file uploaded")
+        # st.write("|  no file uploaded")
+        upload_placeholder.write(f"{prefix} no file uploaded")
         return None
-    elif not filename1:
-        st.write("|  file1 not ready")
+
+    if not filename1:
+        # st.write("|  file1 not ready")
+        upload_placeholder.write(f"{prefix}, file1 not ready")
         return None
-    elif not filename2:
-        st.write("|  file2 not ready")
+
+    if not filename2:
+        # st.write("|  file2 not ready")
+        upload_placeholder.write(f"{prefix}, file2 not ready")
         return None
 
     try:
@@ -218,28 +230,28 @@ def home():  # noqa
         # logger.debug("fn.__doc__: %s", fn.__doc__)
         logger.debug("fn.__name__: %s", fn.__name__)
 
-        from inspect import getabsfile
+        # from inspect import getabsfile
+        # logger.debug("getabsfile(fn): %s", getabsfile(fn))
 
-        logger.debug("getabsfile(fn): %s", getabsfile(fn))
-
-        with st.spinner(" diggin..."):
-            then = perf_counter()
-            try:
-                # aset = ezbee/dzbee/debee
-                aset = globals()[state.ns.beetype](
-                    list1,
-                    list2,
-                    # eps=eps,
-                    # min_samples=min_samples,
-                )
-            except Exception as e:
-                # logger.error("aset = ezbee(...) exc: %s", e)
-                logger.exception("aset = globals()[state.ns.beetype](...) exc: %s", e)
-                aset = ""
-                # st.write(e)
-                st.write("Collecting inputs...")
-                return None
-        st.success(f"Done, took {perf_counter() - then:.2f} s")
+        # convert to simplified chinese if is_tranditional
+        with about_time() as t:
+            with st.spinner(" diggin..."):
+                try:
+                    # aset = ezbee/dzbee/debee
+                    aset = globals()[state.ns.beetype](
+                        t2s(list1),  # t2s, handle trand.chinese
+                        t2s(list2),
+                        # eps=eps,
+                        # min_samples=min_samples,
+                    )
+                except Exception as e:
+                    # logger.error("aset = ezbee(...) exc: %s", e)
+                    logger.exception("aset = globals()[state.ns.beetype](...) exc: %s", e)
+                    aset = ""
+                    # st.write(e)
+                    st.write("Collecting inputs...")
+                    return None
+        st.success(f"Done, took {t.duration_human}")
 
     else:
         try:
@@ -278,6 +290,8 @@ def home():  # noqa
     _ = st.expander("done aligned")
     with _:
         st.table(df_a.astype(str))
+        # st.markdown(df_a.astype(str).to_markdown())
+        # st.markdown(df_a.astype(str).to_numpy().tolist())
 
     # insert seq no
     df_a.insert(0, "sn", range(len(df_a)))
@@ -308,3 +322,5 @@ def home():  # noqa
             # fit_columns_on_grid_load=True,
             update_mode=GridUpdateMode.MODEL_CHANGED,
         )
+
+    return None
