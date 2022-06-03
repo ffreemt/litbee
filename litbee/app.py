@@ -107,7 +107,7 @@ loggu.remove()
 _ = (
     "<green>{time:YY-MM-DD HH:mm:ss}</green> | "
     "<level>{level: <5}</level> | <level>{message}</level> "
-    "<cyan>{name}</cyan>:<cyan>{line}</cyan>"
+    "<cyan>{module}.{name}</cyan>:<cyan>{line}</cyan>"
 )
 loggu.add(
     sys.stderr,
@@ -131,11 +131,15 @@ st.set_page_config(  # type: ignore
 pd.set_option("display.precision", 2)
 pd.options.display.float_format = "{:,.2f}".format
 
+sourcetype = "upload"
+if set_loglevel() <= 10:
+    sourcetype = "urls"
+
 _ = dict(
     beetype="ezbee",
-    sourcetype="upload",
+    sourcetype=sourcetype,
     sourcecount=2,
-    sent_ali=None,
+    sentali=None,
     src_filename="",
     tgt_filename="",
     src_fileio=b"",
@@ -148,6 +152,7 @@ _ = dict(
     df_a=None,
     df_s_a=None,
     count=1,
+    updated=False,
 )
 if "ns" not in state:
     state.ns = SimpleNamespace(**_)
@@ -186,7 +191,8 @@ def main():
     if set_loglevel() <= 10:
         st.markdown(state.ns.count)
     loggu.debug(f" run: {state.ns.count}")
+    logger.debug(f" run: {state.ns.count}")
     state.ns.count += 1
-
+    state.ns.updated = False
 
 main()

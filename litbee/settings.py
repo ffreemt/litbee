@@ -9,7 +9,7 @@ from streamlit import session_state as state
 
 
 def settings():
-    """Prep  Settings/Options page.
+    """Prep Settings/Options page.
 
     Refer to options.py
     """
@@ -53,7 +53,7 @@ def settings():
         index=index,
         format_func=lambda x: f"{x:<8} |",
         help="upload: one or two files; paste: from clipboard; urls: from the net",
-        disabled=True,
+        # disabled=True,
     )
     state.ns.sourcetype = sourcetype
 

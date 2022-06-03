@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "litbee"
-version = "0.1.2-alpha.0"
+version = "0.1.2-alpha.1"
 description = "align (en, de, zh) texts via streamlit "
 authors = ["ffreemt"]
 license = "MIT"
@@ -26,6 +26,9 @@ plotly = "^5.8.0"
 hanzidentifier = "^1.0.2"
 opencc-python-reimplemented = "^0.1.6"
 tabulate = "^0.8.9"
+httpx = "^0.23.0"
+html2text = "^2020.1.16"
+readability-lxml = "^0.8.1"
 
 [tool.poe.executor]
 type = "poetry"
