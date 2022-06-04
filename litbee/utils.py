@@ -1,7 +1,10 @@
 """Prep front cover for sidebar (based on st-bumblebee-st_app.py)."""
+import base64
+from io import BytesIO
 from textwrap import dedent
 
 import logzero
+import pandas as pd
 import streamlit as st
 from logzero import logger
 from set_loglevel import set_loglevel
@@ -267,3 +270,44 @@ hr {
   }
 }
 """
+
+
+def to_excel(df):
+    """Convert df to excel.
+
+    ref. st-bumblebee st_app.py
+    """
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine="xlsxwriter")
+    df.to_excel(writer, sheet_name="Sheet1")
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
+
+
+def get_table_download_link(df):
+    """Generates a link allowing the data in a given panda dataframe to be downloaded.
+
+    Args:
+        df: pandas.dataframe
+
+    Returns:
+        href string
+    """
+    val = to_excel(df)
+    b64 = base64.b64encode(val)  # val looks like b'...'
+    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="aligned_paras.xlsx">Download aligned paras xlsx file</a>'  # decode b'abc' => abc
+
+
+def get_table_download_link_sents(df):
+    """Generates a link allowing the data in a given panda dataframe to be downloaded for sents aligned.
+
+    Args:
+        df: pandas.dataframe
+
+    Returns:
+        href string
+    """
+    val = to_excel(df)
+    b64 = base64.b64encode(val)  # val looks like b'...'
+    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="aligned_sents.xlsx">Download aligned sents xlsx file</a>'  # decode b'abc' => abc

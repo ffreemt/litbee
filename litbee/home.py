@@ -4,18 +4,20 @@ org ezbee_page.py.
 """
 # pylint: disable=invalid-name
 # pylint: disable=too-many-locals, too-many-return-statements, too-many-branches, too-many-statements
+import base64
 import inspect
+import io
 
 # pylint: disable=invalid-name
 from functools import partial
 from itertools import zip_longest
-from about_time import about_time
 
 import hanzidentifier
 import logzero
 import numpy as np
 import pandas as pd
 import streamlit as st
+from about_time import about_time
 
 # from ezbee.gen_pairs import gen_pairs  # aset2pairs?
 from aset2pairs import aset2pairs
@@ -32,8 +34,9 @@ from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 # from st_aggrid.grid_options_builder import GridOptionsBuilder
 from streamlit import session_state as state
 
-from litbee.fetch_upload import fetch_upload
+from litbee.color_map import color_map
 from litbee.fetch_paste import fetch_paste
+from litbee.fetch_upload import fetch_upload
 from litbee.fetch_urls import fetch_urls
 from litbee.t2s import t2s
 
@@ -156,7 +159,9 @@ def home():  # noqa
                         # min_samples=min_samples,
                     )
                 except Exception as e:
-                    logger.exception("aset = globals()[state.ns.beetype](...) exc: %s", e)
+                    logger.exception(
+                        "aset = globals()[state.ns.beetype](...) exc: %s", e
+                    )
                     aset = ""
                     st.write("Collecting inputs...")
                     logger.debug("Collecting inputs...")
@@ -197,12 +202,12 @@ def home():  # noqa
         aligned_pairs, columns=["text1", "text2", "llh"], dtype="object"
     )
 
-    # if set_loglevel() <= 10:
-    _ = st.expander("done aligned")
-    with _:
-        st.table(df_a.astype(str))
-        # st.markdown(df_a.astype(str).to_markdown())
-        # st.markdown(df_a.astype(str).to_numpy().tolist())
+    if set_loglevel() <= 10:
+        _ = st.expander("done aligned")
+        with _:
+            st.table(df_a.astype(str))
+            # st.markdown(df_a.astype(str).to_markdown())
+            # st.markdown(df_a.astype(str).to_numpy().tolist())
 
     # insert seq no
     df_a.insert(0, "sn", range(len(df_a)))
@@ -233,6 +238,53 @@ def home():  # noqa
             # fit_columns_on_grid_load=True,
             update_mode=GridUpdateMode.MODEL_CHANGED,
         )
+
+    # ### prep download
+
+    # taken from vizbee cb_save_xlsx
+    # subset = list(df_a.columns[2:3])  # 3rd col
+    subset = list(df_a.columns[2:])  # 3rd col
+
+    # pop("sn"): remove sn column
+    df_a.pop("sn")
+    s_df = df_a.astype(str).style.applymap(color_map, subset=subset)
+
+    if set_loglevel() <= 10:
+        logger.debug(" showing styled aligned")
+    with st.expander("styled aligned"):
+        # st.dataframe(s_df)  # can't handle styleddf
+        st.table(s_df)
+
+    output = io.BytesIO()
+    with pd.ExcelWriter(
+        output, engine="xlsxwriter"
+    ) as writer:  # pylint: disable=abstract-class-instantiated
+        s_df.to_excel(writer, index=False, header=False, sheet_name="Sheet1")
+        writer.sheets["Sheet1"].set_column("A:A", 70)
+        writer.sheets["Sheet1"].set_column("B:B", 70)
+    output.seek(0)
+
+    val = output.getvalue()
+    b64 = base64.b64encode(val)
+    filename = ""
+    if state.ns.src_filename:
+        filename = f"{state.ns.src_filename}-"
+
+    dl_xlsx = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}aligned_paras.xlsx">Download aligned paras xlsx</a>'
+
+    output = io.BytesIO()
+    df_a.astype(str).to_csv(output, sep="\t", index=False, header=False, encoding="gbk")
+    output.seek(0)
+
+    val = output.getvalue()
+    b64 = base64.b64encode(val)
+    dl_tsv = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}aligned_paras.tsv">Download aligned paras tsv</a>'
+
+    col1_dl, col2_dl = st.columns(2)
+    with col1_dl:
+        st.markdown(dl_xlsx, unsafe_allow_html=True)
+    with col2_dl:
+        st.markdown(dl_tsv, unsafe_allow_html=True)
 
     # reset
     state.ns.updated = False

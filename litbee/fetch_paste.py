@@ -40,5 +40,7 @@ def fetch_paste():
 
     logger.debug("len(list1): %s, len(list2): %s", len(list1), len(list2))
 
-    state.ns.updated = True
     logger.debug("state.ns.updated: %s", state.ns.updated)
+
+    state.ns.src_filename = ""
+    state.ns.updated = True

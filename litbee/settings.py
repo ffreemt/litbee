@@ -68,7 +68,7 @@ def settings():
         sourcecount_list,
         index=index,
         format_func=lambda x: f"{x:<3} |",
-        help="2: two separate sources (files/paste/urls), each containing one language; 1: one mixed source (file/pate/url) containing both languages",
+        help="2: two separate sources (files/pastes/urls), each containing one language; 1: one mixed source (file/paste/url) containing both languages",
         disabled=True,
     )
     state.ns.sourcecount = sourcecount

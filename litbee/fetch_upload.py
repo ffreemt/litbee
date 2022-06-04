@@ -1,6 +1,6 @@
 """Fetch upload and convert to list1/list2."""
-from logzero import logger
 import streamlit as st
+from logzero import logger
 from streamlit import session_state as state
 
 

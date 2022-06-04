@@ -14,7 +14,9 @@ def files2df(file1, file2):
     text1 = [_.strip() for _ in process_upload(file1).splitlines() if _.strip()]
 
     # if file2 is tempfile._TemporaryFileWrapper:
-    if isinstance(file2, tempfile._TemporaryFileWrapper):  # pylint: disable=protected-access
+    if isinstance(
+        file2, tempfile._TemporaryFileWrapper
+    ):  # pylint: disable=protected-access
         try:
             filename = file2.name
         except AttributeError:

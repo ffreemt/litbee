@@ -55,13 +55,12 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Optional
 
+import debee
+import dzbee
+import ezbee
 import loguru
 import logzero
 import pandas as pd
-import ezbee
-import dzbee
-import debee
-
 import streamlit as st
 from loguru import logger as loggu
 from logzero import logger
@@ -69,25 +68,25 @@ from set_loglevel import set_loglevel
 from streamlit import session_state as state
 
 from litbee import __version__
-# from litbee.options import options
+from litbee.home import home
+from litbee.info import info
+from litbee.multipage import Multipage
+from litbee.settings import settings
 
 # from litbee.files2df import files2df
 # from litbee.utils import sb_front_cover, instructions, menu_items
 # from litbee.ezbee_page import ezbee_page
 # from litbee.dzbee_page import dzbee_page
 # from litbee.xbee_page import xbee_page
-from litbee.utils import menu_items
+from litbee.utils import menu_items, style_css
 
-from litbee.multipage import Multipage
+# from litbee.options import options
+
 
 # from litbee.fetch_upload import fetch_upload
 # from litbee.fetch_paste import fetch_paste
 # from litbee.fetch_urls import fetch_urls
 
-from litbee.home import home
-from litbee.settings import settings
-from litbee.info import info
-from litbee.utils import style_css
 
 # from ezbee import ezbee
 
@@ -194,5 +193,6 @@ def main():
     logger.debug(f" run: {state.ns.count}")
     state.ns.count += 1
     state.ns.updated = False
+
 
 main()

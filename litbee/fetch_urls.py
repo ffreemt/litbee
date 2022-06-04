@@ -4,6 +4,7 @@ import streamlit as st
 from icecream import ic
 from logzero import logger
 from streamlit import session_state as state
+
 from litbee.url2txt import url2txt
 
 ic.configureOutput(
@@ -18,8 +19,12 @@ def fetch_urls():
     sourcecount = state.ns.sourcecount
     value = ""
     if beetype == "ezbee":
-        url1 = "https://raw.githubusercontent.com/ffreemt/en-de-zh-txt/master/test_en.txt"
-        url2 = "https://raw.githubusercontent.com/ffreemt/en-de-zh-txt/master/test_zh.txt"
+        url1 = (
+            "https://raw.githubusercontent.com/ffreemt/en-de-zh-txt/master/test_en.txt"
+        )
+        url2 = (
+            "https://raw.githubusercontent.com/ffreemt/en-de-zh-txt/master/test_zh.txt"
+        )
         value = f"{url1} {url2}"
     if beetype == "dzbee":
         url1 = "https://raw.githubusercontent.com/ffreemt/en-de-zh-txt/master/sternstunden04-de.txt"
@@ -144,10 +149,7 @@ def fetch_urls():
                         value=text2,
                     )
 
-            submitted = st.form_submit_button(
-                "Submit",
-                on_click=text2lists
-            )
+            submitted = st.form_submit_button("Submit", on_click=text2lists)
 
     else:  # 1-mix
         with st.form(key="fetched_1_text_in_form"):
@@ -167,4 +169,5 @@ def fetch_urls():
         return
     # """
 
+    state.ns.src_filename = ""
     state.ns.updated = True
