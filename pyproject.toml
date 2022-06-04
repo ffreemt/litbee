@@ -48,7 +48,7 @@ isort = "isort tests litbee"
 black = "black tests litbee"
 format = ["isort", "black"]
 docstyle = "pydocstyle --convention=google tests litbee"
-copyapp = "copy appy.py litbee/app.py"
+copyapp = "cp app.py litbee"
 prerelease = {cmd = "poetry version prerelease && sync-version"}
 git = {cmd = "git ac Update && git push && git push github"}
 deploy = ["copyapp", "export", "git"]
