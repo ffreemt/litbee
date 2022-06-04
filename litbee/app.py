@@ -97,7 +97,7 @@ assert curr_py == "3.8", msg
 
 os.environ["TZ"] = "Asia/Shanghai"
 try:
-    time.tzset()
+    time.tzset()  # type: ignore
 except Exception as _:
     logger.warning("time.tzset() error: %s. Probably running Windows, we let it pass.", _)
 

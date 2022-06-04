@@ -9,7 +9,7 @@ from logzero import logger
 from readability import Document
 
 
-@st.cache
+# @st.cache
 def url2txt(
     url: str,
     bodywidth: Optional[int] = 5000,

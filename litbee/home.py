@@ -272,6 +272,7 @@ def home():  # noqa
 
     dl_xlsx = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}aligned_paras.xlsx">Download aligned paras xlsx</a>'
 
+    _ = """
     output = io.BytesIO()
     # df_a.astype(str).to_csv(output, sep="\t", index=False, header=False, encoding="gbk")
     df_a.astype(object).to_csv(output, sep="\t", index=False, header=False, encoding="gbk")
@@ -280,12 +281,15 @@ def home():  # noqa
     val = output.getvalue()
     b64 = base64.b64encode(val)
     dl_tsv = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}aligned_paras.tsv">Download aligned paras tsv</a>'
+    # """
 
     col1_dl, col2_dl = st.columns(2)
     with col1_dl:
         st.markdown(dl_xlsx, unsafe_allow_html=True)
+    _ = """
     with col2_dl:
         st.markdown(dl_tsv, unsafe_allow_html=True)
+    # """
 
     # reset
     state.ns.updated = False
