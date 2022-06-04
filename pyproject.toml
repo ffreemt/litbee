@@ -48,6 +48,7 @@ isort = "isort tests litbee"
 black = "black tests litbee"
 format = ["isort", "black"]
 docstyle = "pydocstyle --convention=google tests litbee"
+git = {cmd = "git ac Update && git push && git push github"}
 tunnel = {cmd = "ssh -CN ip_or_hostname_defined_in_hosts -L 9091:127.0.0.1:9091"}
 
 [tool.poetry.dev-dependencies]
