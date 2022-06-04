@@ -273,7 +273,8 @@ def home():  # noqa
     dl_xlsx = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}aligned_paras.xlsx">Download aligned paras xlsx</a>'
 
     output = io.BytesIO()
-    df_a.astype(str).to_csv(output, sep="\t", index=False, header=False, encoding="gbk")
+    # df_a.astype(str).to_csv(output, sep="\t", index=False, header=False, encoding="gbk")
+    df_a.astype(object).to_csv(output, sep="\t", index=False, header=False, encoding="gbk")
     output.seek(0)
 
     val = output.getvalue()

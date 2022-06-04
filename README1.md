@@ -8,29 +8,26 @@ Python 3.8 only
 
 `pyicu`, `pycld2` and `fasttext`: refer to `debee`'s pre-install [https://github.com/ffreemt/debee/blob/main/README.md](https://github.com/ffreemt/debee/blob/main/README.md)
 
-## via pip
+## Install it
+### via pip
 ```bash
 pip install litbee
 python -m litbee
 ```
 
-## Or via git clone
-```
+### Or via git clone
+```bash
 git clone https://github.com/ffreemt/litbee
 cd litbee
-```
+pip install -r requirements.txt
+# or poetry install
 
-## Install it
-```shell
-poetry install
-
-# or pip install -r requirements.txt
 ```
 
 ## Use it
 ```bash
-python -m streamlit run app.py
+python -m litbee
 
+# or git clone and python -m streamlit run app.py
 # or streamlit run app.py
-# or python -m litbee
 ```

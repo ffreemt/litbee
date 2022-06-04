@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "litbee"
-version = "0.1.2-alpha.3"
+version = "0.1.2"
 description = "align (en, de, zh) texts via streamlit "
 authors = ["ffreemt"]
 license = "MIT"
@@ -48,10 +48,10 @@ isort = "isort tests litbee"
 black = "black tests litbee"
 format = ["isort", "black"]
 docstyle = "pydocstyle --convention=google tests litbee"
-copyapp = "cp app.py litbee"
+cpapp = "cp app.py litbee"
 prerelease = {cmd = "poetry version prerelease && sync-version"}
-git = {cmd = "git ac Update && git push && git push github"}
-deploy = ["copyapp", "export", "git"]
+git = {cmd = "git push && git push github"}
+deploy = ["cpapp", "export", "git"]
 tunnel = {cmd = "ssh -CN ip_or_hostname_defined_in_hosts -L 9091:127.0.0.1:9091"}
 
 [tool.poetry.dev-dependencies]

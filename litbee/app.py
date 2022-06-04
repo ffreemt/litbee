@@ -96,7 +96,10 @@ msg = f"Some packages litbee depends on can only run with Python 3.8, current py
 assert curr_py == "3.8", msg
 
 os.environ["TZ"] = "Asia/Shanghai"
-time.tzset()
+try:
+    time.tzset()
+except Exception as _:
+    logger.warning("time.tzset() error: %s. Probably running Windows, we let it pass.", _)
 
 # uncomment this in dev oe set/export LOGLEVEL=10
 # os.environ["LOGLEVEL"] = "10"
